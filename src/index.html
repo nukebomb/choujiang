@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <div class="left-con">
+      <header>
+        <div class="img-con">
+          <img src="https://nukebomb.oss-cn-shenzhen.aliyuncs.com/yhimgs/meixu-large.jpeg" alt="">
+        </div>
+        <div class="title-con">
+          <h3><strong>第四届汉风集市</strong><br>抽奖活动</h3>
+        </div>
+      </header>
+      <section>
+        <div class="name-container">
+          <div id="list-random"></div>
+        </div>
+      </section>
+      <footer>
+        <div class="btn-con">
+          <button id="cj-btn">抽奖</button>
+          <button id="cj-end">停止</button>
+        </div>
+      </footer>
+    </div>
+    <div class="right-con">
+      <div class="zj-title">
+        <h3>中奖名单</h3>
+      </div>
+      <div class="zj-table">
+        <ul id="zjNameList">
+        </ul>
+      </div>
+      <div class="zj-reset">
+        <button id="reset">重置</button>
+      </div>
+    </div>
+  </div>
+  <script src="./scripts/jquery.js"></script>
+  <script>
+    var list = ['布拉德皮特', '李昂', '汤姆克鲁斯', '杰森斯坦僧', '保罗', '小栗旬', '长泽雅美', '张学友']
+    var listCurrent = list.slice()
+    var showzone = $('#list-random')
+    var end = $('#cj-end')
+    var timer
+    var num
+    var currentName
+    var zjNameList = $('#zjNameList')
+    var reset = $('#reset')
+
+    $('#cj-btn').click(function () {
+      var length = (listCurrent.length !== list.length ? listCurrent.length : list.length)
+      timer = setInterval(function () {
+        var currentNum = Math.floor(Math.random() * (length))
+        if (num !== currentNum) {
+          num = currentNum
+          //console.log(num)
+          currentName = listCurrent[num]
+          showzone.text(currentName)
+        } else {
+          num = Math.floor(Math.random() * (length))
+          //console.log('new'+num)
+          currentName = listCurrent[num]
+          showzone.text(currentName)
+        }
+      }, 1)
+    })
+    end.click(function () {
+      clearInterval(timer)
+      zjNameList.append(`<li>${currentName}</li>`)
+      listCurrent.splice(num, 1)
+      console.log(listCurrent)
+    })
+    reset.click(function () {
+      listCurrent = list
+      zjNameList.empty()
+      showzone.empty()
+    })
+  </script>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    ul,
+    li {
+      list-style: none;
+      list-style-type: none;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      border: none
+    }
+
+    #app {
+      width: 100%;
+      height: 100%;
+      display: flex;
+    }
+
+    header {
+      width: 80%;
+      margin: 0 auto;
+      padding: 30px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .left-con {
+      flex-grow: 2;
+      height: 100%;
+      border-right: 1px solid rgba(100, 100, 100, 0.3);
+    }
+
+    .img-con img {
+      max-width: 150px;
+      max-height: 150px;
+    }
+
+    .title-con {
+      flex-grow: 2;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .name-container {
+      width: 300px;
+      height: 300px;
+      margin: 0 auto;
+      position: relative;
+      box-shadow: 1px 2px 15px rgba(100, 100, 100, 0.3);
+    }
+
+    #list-random {
+      width: 200px;
+      height: 30px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    #list-cj {
+      width: 200px;
+      height: 30px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      border: 1px solid black;
+    }
+
+    #list-cj ul li {
+      width: 200px;
+      height: 30px;
+    }
+
+    footer {
+      width: 100%;
+      margin-top: 60px;
+    }
+
+    .btn-con {
+      margin: 0 auto;
+      width: 200px;
+      height: 50px;
+    }
+
+    #cj-btn, #cj-end {
+      display: block;
+      width: 200px;
+      height: 30px;
+      margin: 0 atuo;
+    }
+    #cj-end{
+      margin-top: 20px;
+    }
+    .right-con {
+      width: 300px;
+      padding: 30px;
+    }
+
+    .zj-title {
+      width: 100%
+    }
+
+    .zj-title h3 {
+      text-align: center;
+    }
+
+    .zj-table {
+      margin-top: 100px;
+    }
+
+    .zj-table ul {
+      width: 200px;
+      margin: 0 auto;
+    }
+
+    .zj-table ul li {
+      width: 200px;
+      height: 30px;
+      display: block;
+    }
+
+    .zj-reset {
+      width: 200px;
+      height: 20px;
+      margin: 100px auto 0px auto;
+    }
+
+    #reset {
+      position: absolute;
+      display: block;
+      width: 200px;
+      height: 30px;
+      bottom: 50px;
+    }
+  </style>
+</body>
+
+</html>
